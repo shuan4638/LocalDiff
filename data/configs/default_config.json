@@ -1,0 +1,5 @@
+{
+  "edge_hidden_feats": 16,
+  "node_out_feats": 128,
+  "num_step_message_passing": 3
+}
