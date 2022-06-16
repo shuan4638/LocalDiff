@@ -8,9 +8,7 @@ import dgllife
 from dgllife.model import MPNNGNN
 
 def get_diff(ratom_feats, patom_feats, atom_p2r):
-    diff_feats = []
-    for pidx, ridx in atom_p2r.items():
-        diff_feats.append(patom_feats[pidx]- ratom_feats[ridx])
+    diff_feats = [patom_feats[pidx]-ratom_feats[ridx] for pidx, ridx in atom_p2r.items()]
     return torch.stack(diff_feats)
 
 def batch_sum(bg, diff_feats):

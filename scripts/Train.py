@@ -1,5 +1,3 @@
-#  paper: https://pubs.acs.org/doi/10.1021/acs.jpclett.0c00500 
-#  data: https://www.nature.com/articles/s41597-020-0460-4
 from argparse import ArgumentParser
 import numpy as np
 import torch
@@ -17,9 +15,7 @@ def run_a_train_epoch(args, epoch, model, data_loader, loss_criterion, optimizer
         if len(labels) == 1:
             continue
         labels = labels.to(args['device'])
-        ### code to get prediction
         preds = predict(args, model, rbg, pbg, p2rs)
-        ### code to get loss
         loss = loss_criterion(preds, labels)
         train_loss += loss.item()
         
@@ -31,7 +27,7 @@ def run_a_train_epoch(args, epoch, model, data_loader, loss_criterion, optimizer
         if batch_id % args['print_every'] == 0:
             print('\repoch %d/%d, batch %d/%d, rmse loss: %.4f' % (epoch + 1, args['num_epochs'], batch_id + 1, len(data_loader), np.sqrt(loss.item())), end='', flush=True)
 
-    print('\nepoch %d/%d, training loss: %.4f' % (epoch + 1, args['num_epochs'], train_loss/batch_id))
+    print('\nepoch %d/%d, training loss: %.4f' % (epoch + 1, args['num_epochs'], np.sqrt(train_loss/batch_id)))
 
 def run_an_eval_epoch(args, model, data_loader, loss_criterion):
     model.eval()
@@ -41,12 +37,10 @@ def run_an_eval_epoch(args, model, data_loader, loss_criterion):
         for batch_id, batch_data in enumerate(data_loader):
             rbg, pbg, p2rs, labels = batch_data
             labels = labels.to(args['device'])
-            ### code to get prediction
             preds = predict(args, model, rbg, pbg, p2rs)
-            ### code to get loss
             loss = loss_criterion(preds, labels)
             val_loss += loss.item()
-    return val_loss/batch_id
+    return np.sqrt((val_loss/batch_id))
 
 
 def main(args):
@@ -61,28 +55,25 @@ def main(args):
         run_a_train_epoch(args, epoch, model, train_loader, loss_criterion, optimizer)
         val_loss = run_an_eval_epoch(args, model, val_loader, loss_criterion)
         early_stop = stopper.step(val_loss, model) 
-#         scheduler.step()
-        print('epoch %d/%d, validation loss: %.4f' %  (epoch + 1, args['num_epochs'], val_loss))
+        scheduler.step()
+        print('epoch %d/%d, validation RMSE loss: %.4f' %  (epoch + 1, args['num_epochs'], val_loss))
         print('epoch %d/%d, Best loss: %.4f' % (epoch + 1, args['num_epochs'], stopper.best_score))
         if early_stop:
             print ('Early stopped!!')
             break
-
-    stopper.load_checkpoint(model)
-#     test_loss = run_an_eval_epoch(args, model, test_loader, loss_criterion)
-    print('test loss: %.4f' % test_loss)
+    return
     
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-g', '--gpu', default='cpu', help='GPU device to use')
+    parser.add_argument('-g', '--gpu', default='cuda:0', help='GPU device to use')
     parser.add_argument('-c', '--config', default='default_config.json', help='Configuration of model')
-    parser.add_argument('-b', '--batch-size', default=64, help='Batch size of dataloader')                             
+    parser.add_argument('-b', '--batch-size', default=12, help='Batch size of dataloader')                             
     parser.add_argument('-n', '--num-epochs', type=int, default=50, help='Maximum number of epochs for training')
     parser.add_argument('-p', '--patience', type=int, default=15, help='Patience for early stopping')
     parser.add_argument('-cl', '--max-clip', type=int, default=20, help='Maximum number of gradient clip')
-    parser.add_argument('-lr', '--learning-rate', type=float, default=1e-4, help='Learning rate of optimizer')
+    parser.add_argument('-lr', '--learning-rate', type=float, default=1e-3, help='Learning rate of optimizer')
     parser.add_argument('-l2', '--weight-decay', type=float, default=1e-6, help='Weight decay of optimizer')
-    parser.add_argument('-ss', '--schedule_step', type=int, default=10, help='Step size of learning scheduler')
+    parser.add_argument('-ss', '--schedule_step', type=int, default=20, help='Step size of learning scheduler')
     parser.add_argument('-nw', '--num-workers', type=int, default=0, help='Number of processes for data loading')
     parser.add_argument('-pe', '--print-every', type=int, default=20, help='Print the training progress every X mini-batches')
     args = parser.parse_args().__dict__
