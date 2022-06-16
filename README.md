@@ -32,11 +32,7 @@ pip install dgllife
 ## Usage
 
 ### [1] Train LocalDiff model
-Go to the script folder
-```
-cd ../scripts
-```
-and run the following to train the model
+Go to the `scripts` folder and run the following to train the model
 ```
 python Train.py
 ```
