@@ -1,7 +1,7 @@
 # LocalDiff
-## A LocalRetro-like DNN for activation energy prediction for AMSG member training
 Implementation of [Deep Learning of Activation Energies, J. Phys. Chem. Lett. 2020](https://pubs.acs.org/doi/10.1021/acs.jpclett.0c00500) with dgl python package.<br>
-The data is downloaded from https://zenodo.org/record/3715478, published at [Reactants, products, and transition states of elementary chemical reactions based on quantum chemistry, Sci Data, 2020](https://www.nature.com/articles/s41597-020-0460-4)
+![](https://pubs.acs.org/cms/10.1021/acs.jpclett.0c00500/asset/images/large/jz0c00500_0001.jpeg)
+
 
 ## Developer
 Shuan Chen (contact: shuankaist@kaist.ac.kr)<br>
@@ -28,6 +28,10 @@ pip install dgl
 pip install dgllife
 ```
 
+## Data
+The data is downloaded from https://zenodo.org/record/3715478, published at [Reactants, products, and transition states of elementary chemical reactions based on quantum chemistry, Sci Data, 2020](https://www.nature.com/articles/s41597-020-0460-4)
+I randomly splitted the wb97xd3.csv to train/val/test and hide the test set :p.
+
 
 ## Usage
 
@@ -42,5 +46,6 @@ The trained model will be saved at ` LocalDiff/models/LocalDiff.pth`<br>
 See `demo.ipynb`
 
 ## Objective
-According to the original paper, the mean absolute error (MAE) is 1.7 ± 0.1 kcal mol–1 and the root-mean-square error (RMSE) is 3.4 ± 0.3 kcal mol–1<br>
-Try to perform better!
+According to the original paper, the mean absolute error (MAE) is 1.7 ± 0.1 kcal/mol and the root-mean-square error (RMSE) is 3.4 ± 0.3 kcal/mol<br>
+The val RMSE of this repo is ~16 kcal/mol<br>
+Try to beat the baseline!
