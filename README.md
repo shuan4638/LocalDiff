@@ -1,6 +1,6 @@
 # LocalDiff
-Implementation of [Deep Learning of Activation Energies, J. Phys. Chem. Lett. 2020](https://pubs.acs.org/doi/10.1021/acs.jpclett.0c00500) with dgl python package.<br>
-![](https://pubs.acs.org/cms/10.1021/acs.jpclett.0c00500/asset/images/large/jz0c00500_0001.jpeg =300x)
+Implementation of [Deep Learning of Activation Energies, J. Phys. Chem. Lett. 2020](https://pubs.acs.org/doi/10.1021/acs.jpclett.0c00500) with dgl python package.<br><br>
+<img src="https://pubs.acs.org/cms/10.1021/acs.jpclett.0c00500/asset/images/large/jz0c00500_0001.jpeg" height="400">
 
 
 ## Developer
