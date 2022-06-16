@@ -65,7 +65,7 @@ def main(args):
     
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('-g', '--gpu', default='cuda:0', help='GPU device to use')
+    parser.add_argument('-g', '--gpu', default='cpu', help='GPU device to use')
     parser.add_argument('-c', '--config', default='default_config.json', help='Configuration of model')
     parser.add_argument('-b', '--batch-size', default=12, help='Batch size of dataloader')                             
     parser.add_argument('-n', '--num-epochs', type=int, default=50, help='Maximum number of epochs for training')

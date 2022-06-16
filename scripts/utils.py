@@ -85,7 +85,7 @@ def load_model(args):
                 print ('Train from exsited model checkpoint...')
             elif user_answer == 'c':
                 model_name = input('Enter new model name: ')
-                args['model_path'] = args['model_path'].replace('%s.pth' % args['dataset'], '%s.pth' % model_name)
+                args['model_path'] = args['model_path'].replace('.pth', '_%s.pth' % model_name)
                 stopper = EarlyStopping(mode = 'lower', patience=args['patience'], filename=args['model_path'])
                 print ('Training a new model %s.pth' % model_name)
         else:
@@ -93,7 +93,7 @@ def load_model(args):
         return model, loss_criterion, optimizer, scheduler, stopper
     
     else:
-        model.load_state_dict(torch.load(args['model_path'])['model_state_dict'])
+        model.load_state_dict(torch.load(args['model_path'], map_location=torch.device(args['device']))['model_state_dict'])
         return model
 
 def batch_p2r(rgraphs, pgraphs, p2r_list):
