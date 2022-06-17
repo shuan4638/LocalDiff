@@ -42,7 +42,7 @@ python Train.py
 ```
 The trained model will be saved at ` LocalDiff/models/LocalDiff.pth`<br>
 
-### [2] Test LocalRetro model
+### [2] Demo the trained model on individual reaction
 See `demo.ipynb`
 
 ## Objective
