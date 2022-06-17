@@ -44,6 +44,7 @@ The trained model will be saved at ` LocalDiff/models/LocalDiff.pth`<br>
 
 ### [2] Demo the trained model on individual reaction
 See `demo.ipynb`
+10 reactions from the test set is sampled in the [google sheet](https://docs.google.com/spreadsheets/d/1NHXccBwCELFfy2HFx0xBShcY0wRHpe76P3sf4bixf5U/edit#gid=0)
 
 ## Objective
 According to the original paper, the mean absolute error (MAE) is 1.7 ± 0.1 kcal/mol and the root-mean-square error (RMSE) is 3.4 ± 0.3 kcal/mol<br>
